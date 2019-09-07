@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.smithjterm.storycrafter.help">
+    tools:context="com.smithjterm.plantnpc.help">
 
     <LinearLayout
         android:layout_width="374dp"

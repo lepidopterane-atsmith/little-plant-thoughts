@@ -1,39 +1,37 @@
 {
   "project_info": {
-    "project_number": "954180298742",
-    "firebase_url": "https://storycrafter-d4cb3.firebaseio.com",
-    "project_id": "storycrafter-d4cb3",
-    "storage_bucket": "storycrafter-d4cb3.appspot.com"
+    "project_number": "318677762976",
+    "firebase_url": "https://plantnpc.firebaseio.com",
+    "project_id": "plantnpc",
+    "storage_bucket": "plantnpc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:954180298742:android:40b66549dda89ab5",
+        "mobilesdk_app_id": "1:318677762976:android:fc93d8e41df08fca795ac5",
         "android_client_info": {
-          "package_name": "com.smithjterm.storycrafter"
+          "package_name": "com.smithjterm.plantnpc"
         }
       },
       "oauth_client": [
         {
-          "client_id": "954180298742-piel2nu4uitafspqdqok4bphfkl5llbt.apps.googleusercontent.com",
+          "client_id": "318677762976-asiort0ivjjkkfmt71n1bg8edj21igte.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC0V-9iyQn2LsBfzAPmg9vFEJIbTpR-Kl0"
+          "current_key": "AIzaSyAAyVOnvNOk0VFIw6-d9bpFryLzUgqTjnU"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "318677762976-asiort0ivjjkkfmt71n1bg8edj21igte.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

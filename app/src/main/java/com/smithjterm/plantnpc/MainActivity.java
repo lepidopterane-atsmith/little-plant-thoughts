@@ -1,24 +1,14 @@
-package com.smithjterm.storycrafter;
+package com.smithjterm.plantnpc;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,9 +18,6 @@ public class MainActivity extends AppCompatActivity {
     // does the startLoadActivity.
 
     static final int RESTART_REQUEST = 2;
-
-    public static final String TREE_LOAD_KEY="tree load";
-    public static final String LOAD_CODE_KEY="loaded code";
 
     public static final String CHAPTER_TEXT_KEY="chapter text";
 
@@ -75,7 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
         } */
 
-        firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference().child("stories");
+        firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference().child("prologue");
+
+        Log.i( "MainActivity", firebaseDatabaseRef.getKey());
+
         rootView = (ViewGroup) findViewById(R.id.linearLayout3);
     }
 
@@ -103,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void helpActivity(View view){
+        Log.i( "MainActivity", firebaseDatabaseRef.getKey());
         Intent intent = new Intent(this,help.class);
         startActivity(intent);
     }

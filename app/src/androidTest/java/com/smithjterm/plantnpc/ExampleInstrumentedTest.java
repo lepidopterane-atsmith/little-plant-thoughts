@@ -1,4 +1,4 @@
-package com.smithjterm.storycrafter;
+package com.smithjterm.plantnpc;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

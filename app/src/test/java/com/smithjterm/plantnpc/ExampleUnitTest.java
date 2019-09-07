@@ -1,4 +1,4 @@
-package com.smithjterm.storycrafter;
+package com.smithjterm.plantnpc;
 
 import org.junit.Test;
 
