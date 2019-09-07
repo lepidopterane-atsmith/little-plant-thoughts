@@ -36,11 +36,10 @@
             tools:layout_editor_absoluteY="318dp" />
 
         <Button
-            android:id="@+id/play_button"
+            android:id="@+id/prologue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="playActivity"
             android:text="@string/play"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
@@ -50,9 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="playActivity"
             android:text="@string/ch_1"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
@@ -61,9 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="playActivity"
             android:text="@string/ch_2"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
@@ -72,7 +69,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="playActivity"
             android:text="@string/ch_3"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
