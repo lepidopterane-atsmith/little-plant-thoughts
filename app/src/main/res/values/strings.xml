@@ -2,13 +2,11 @@
     <string name="app_name">Little Plant Thoughts</string>
     <string name="title">Enter the title</string>
     <string name="body">Enter the body</string>
-    <string name="choice1">Enter the 1st choice</string>
-    <string name="choice2">Enter the 2nd choice</string>
-    <string name="play">Play</string>
-    <string name="save_entry">Save Entry</string>
-    <string name="c1_inPlay">CHOOSE</string>
+    <string name="play">Prologue</string>
+    <string name="ch_1">Chapter 1</string>
+    <string name="ch_2">Chapter 2</string>
+    <string name="ch_3">Chapter 3</string>
     <string name="c2_inPlay"> >>> </string>
-    <string name="text_in_popup">ALL NODES NEED TO BE FILLED BEFORE PLAYING</string>
     <string name="help_button">HELP</string>
     <string name="help_text">
         Welcome to Little Plant Thoughts!
@@ -17,8 +15,5 @@
         \n
         \n Made by The Strict Parents for PennApps XX.
     </string>
-    <string name="load_title">Load Story</string>
-    <string name="load_blurb">Type in a Secret Code to download an adventure to edit!</string>
-    <string name="load_cmd">Load</string>
 
 </resources>

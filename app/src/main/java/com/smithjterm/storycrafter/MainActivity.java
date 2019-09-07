@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         } */
 
         firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference().child("stories");
-        rootView = (ViewGroup) findViewById(R.id.add_layout);
+        rootView = (ViewGroup) findViewById(R.id.linearLayout3);
     }
 
     @Override
