@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,7 +58,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Button prologueButton = (Button) findViewById(R.id.prologue);
+        prologueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setCurrentRequestedChapter("prologue");
+            }
+        });
+        Button chapterOneButton = (Button) findViewById(R.id.ch1_button);
+        chapterOneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setCurrentRequestedChapter("chapter1");
+            }
+        });
+        Button chapterTwoButton = (Button) findViewById(R.id.ch2_button);
+        chapterTwoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setCurrentRequestedChapter("chapter2");
+            }
+        });
+        Button chapterThreeButton = (Button) findViewById(R.id.ch3_button);
+        chapterThreeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setCurrentRequestedChapter("chapter3");
+            }
+        });
         // The test below makes sure isFull works.
 
         //  String result = "test result: "+mainTree.isFull();
@@ -74,7 +102,13 @@ public class MainActivity extends AppCompatActivity {
 
         } */
 
-        firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference().child("chapters").child("prologue");
+
+    }
+
+
+    public void setCurrentRequestedChapter(String chapter){
+        storyList = new ArrayList<>();
+        firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference().child("chapters").child(chapter);
         firebaseDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -85,10 +119,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("story is",storyLine.toString());
                         storyList.add(storyLine.toString());
                     }
-//                    ArrayList<String> data = (ArrayList<String>) dataSnapshot.getValue();
-//                    for(int i = 0; i <= data.size();i++){
-//                        Log.d("data is ",data.get(i));
-//                    }
+                    playActivity();
                 }
             }
 
@@ -97,12 +128,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Error oops", String.valueOf(databaseError.getCode()));
             }
         });
-
         Log.i( "MainActivity", firebaseDatabaseRef.getKey());
-
         rootView = (ViewGroup) findViewById(R.id.linearLayout3);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -114,13 +142,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // TODO: refactor this so it pulls dialogue stored on the server and ships it into playActivity
-    public void playActivity(View view){
+    public void playActivity(){
 
         //Log.i("MainActivity",mainTree.toString(""));
 
         Intent intent = new Intent(this, PlayActivity.class);
         intent.putStringArrayListExtra(CHAPTER_TEXT_KEY,storyList);
-
         startActivityForResult(intent, RESTART_REQUEST);
 
     }
