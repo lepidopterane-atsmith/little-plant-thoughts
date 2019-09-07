@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class PlayActivity extends AppCompatActivity {
 
     TextView title, body;
     int chatIndex = 0;
-    String[] chapterText;
+    List<String> storyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,22 +28,22 @@ public class PlayActivity extends AppCompatActivity {
 
         Bundle extras = i.getExtras();
 
-        chapterText = extras.getStringArray(MainActivity.CHAPTER_TEXT_KEY);
+        storyList = extras.getStringArrayList(MainActivity.CHAPTER_TEXT_KEY);
 
-        body.setText(chapterText[0]);
+        body.setText(storyList.get(0));
 
     }
 
     public void makeChoice(View view){
         chatIndex++;
 
-        if (chatIndex > chapterText.length-1) {
+        if (chatIndex > storyList.size()-1) {
             Intent i = getIntent();
             setResult(MainActivity.RESULT_OK, i);
             finish();
 
         } else {
-            body.setText(chapterText[chatIndex]);
+            body.setText(storyList.get(chatIndex));
         }
     }
 

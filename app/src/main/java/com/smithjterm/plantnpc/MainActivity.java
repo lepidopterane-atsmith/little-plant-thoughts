@@ -1,14 +1,25 @@
 package com.smithjterm.plantnpc;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+class firebaseData{
+
+}
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     static final int RESTART_REQUEST = 2;
 
     public static final String CHAPTER_TEXT_KEY="chapter text";
+    public ArrayList<String> storyList = new ArrayList<>();
 
     // we won't need this after database integration
     public String[] prologueText = {"Eeeyah! Hwah!","EEP!",
@@ -62,7 +74,29 @@ public class MainActivity extends AppCompatActivity {
 
         } */
 
-        firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference().child("prologue");
+        firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference().child("chapters").child("prologue");
+        firebaseDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                {
+
+                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Object storyLine = ds.getValue();
+                        Log.d("story is",storyLine.toString());
+                        storyList.add(storyLine.toString());
+                    }
+//                    ArrayList<String> data = (ArrayList<String>) dataSnapshot.getValue();
+//                    for(int i = 0; i <= data.size();i++){
+//                        Log.d("data is ",data.get(i));
+//                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Error oops", String.valueOf(databaseError.getCode()));
+            }
+        });
 
         Log.i( "MainActivity", firebaseDatabaseRef.getKey());
 
@@ -85,8 +119,7 @@ public class MainActivity extends AppCompatActivity {
         //Log.i("MainActivity",mainTree.toString(""));
 
         Intent intent = new Intent(this, PlayActivity.class);
-
-        intent.putExtra(CHAPTER_TEXT_KEY, prologueText);
+        intent.putStringArrayListExtra(CHAPTER_TEXT_KEY,storyList);
 
         startActivityForResult(intent, RESTART_REQUEST);
 
