@@ -1,7 +1,6 @@
 package com.smithjterm.plantnpc;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,11 +15,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
-
-class firebaseData{
-
-}
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,20 +28,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String CHAPTER_TEXT_KEY="chapter text";
     public ArrayList<String> storyList = new ArrayList<>();
 
-    // we won't need this after database integration
-    public String[] prologueText = {"Eeeyah! Hwah!","EEP!",
-        "Oh, you scared me, Caretaker. It’s just you, thank goodness.",
-        "Wait, what do you mean you didn’t know you could hear our thoughts? I wouldn’t exactly call it that…",
-        "If a plant cares about you a great deal, and it's clear to such a plant you care about it a great deal, we can communicate telepathically! It's a deal! A great one, at that!",
-        "You have been watering me well, and I do enjoy that you've taken care to give me my proper amount of lighting.",
-        "There's more behind this connection than just you caring about me, I feel it in my tiny plant soul. I see you have some solid outfit choices, though I'm not one to talk, being a plant.",
-        "I mean, in my experience, you seem to me like the kind of human I'd like to be friends with. You seem like you'd listen to me, especially since you're doing that right now. And you have a really kind demeanor when you're near me, anyway.",
-        "But if you leave me with any less water than you're supposed to give me, even one day, I may shrivel a little - and I'll need to recover from that, you know.",
-        "Recovery takes time, and once I'm back to my normal self, I'll feel good and know you care about me enough to start thinking my little plant thoughts at you again.",
-        "I don't think you'll ever leave me without a drink, though. You wouldn't do something like that to me, would you, good friend?",
-        "Yes, yes I just did puppy dog eyes at you. I mean, humans can and they're not puppy dogs last time I checked…",
-        "Wait, you really mean it? You'll keep taking care of me? And you still want to be friends?",
-        "This is going to be such fun! You and I, I think we'll come to love our little chats…"};
+    public static final String CHAPTER_SPRITES_KEY="chapter sprites";
+    public ArrayList<String> spritesList = new ArrayList<>();
 
     // firebase instance variable
     private DatabaseReference firebaseDatabaseRef;
@@ -108,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setCurrentRequestedChapter(String chapter){
         storyList = new ArrayList<>();
+        spritesList = new ArrayList<>();
         firebaseDatabaseRef = FirebaseDatabase.getInstance().getReference().child("chapters").child(chapter);
         firebaseDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -116,8 +99,10 @@ public class MainActivity extends AppCompatActivity {
 
                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
                         Object storyLine = ds.getValue();
+                        String[] entries = storyLine.toString().split("_");
                         Log.d("story is",storyLine.toString());
-                        storyList.add(storyLine.toString());
+                        storyList.add(entries[0]);
+                        spritesList.add(entries[1]);
                     }
                     playActivity();
                 }
@@ -131,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i( "MainActivity", firebaseDatabaseRef.getKey());
         rootView = (ViewGroup) findViewById(R.id.linearLayout3);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -141,19 +127,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // TODO: refactor this so it pulls dialogue stored on the server and ships it into playActivity
     public void playActivity(){
 
         //Log.i("MainActivity",mainTree.toString(""));
 
         Intent intent = new Intent(this, PlayActivity.class);
         intent.putStringArrayListExtra(CHAPTER_TEXT_KEY,storyList);
+        intent.putStringArrayListExtra(CHAPTER_SPRITES_KEY,spritesList);
         startActivityForResult(intent, RESTART_REQUEST);
 
     }
 
     public void helpActivity(View view){
-        Log.i( "MainActivity", firebaseDatabaseRef.getKey());
         Intent intent = new Intent(this,help.class);
         startActivity(intent);
     }

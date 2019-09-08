@@ -24,17 +24,19 @@
             android:id="@+id/imageView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/plantblink" />
+            app:srcCompat="@drawable/plant_normal" />
 
         <TextView
             android:id="@+id/playTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:outlineProvider="none"
+            android:shadowColor="#00000000"
             android:text="TextView"
             android:textColor="@android:color/background_dark"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:background="@color/colorPrimaryDark"
             tools:layout_editor_absoluteX="33dp"
             tools:layout_editor_absoluteY="53dp" />
 
