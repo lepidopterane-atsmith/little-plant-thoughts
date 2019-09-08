@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,8 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
     // firebase instance variable
     private DatabaseReference firebaseDatabaseRef;
+    private DatabaseReference soilValidator;
 
     private ViewGroup rootView;
+
+    private int k = 0;
+    private int children = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,27 +52,9 @@ public class MainActivity extends AppCompatActivity {
                 setCurrentRequestedChapter("prologue");
             }
         });
-        Button chapterOneButton = (Button) findViewById(R.id.ch1_button);
-        chapterOneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setCurrentRequestedChapter("chapter1");
-            }
-        });
-        Button chapterTwoButton = (Button) findViewById(R.id.ch2_button);
-        chapterTwoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setCurrentRequestedChapter("chapter2");
-            }
-        });
-        Button chapterThreeButton = (Button) findViewById(R.id.ch3_button);
-        chapterThreeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setCurrentRequestedChapter("chapter3");
-            }
-        });
+
+        monitorSoil();
+
         // The test below makes sure isFull works.
 
         //  String result = "test result: "+mainTree.isFull();
@@ -87,6 +74,85 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void monitorSoil(){
+        soilValidator = FirebaseDatabase.getInstance().getReference().child("soilTimeline");
+        soilValidator.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                children += ((int) dataSnapshot.getChildrenCount() / 2) ;
+                int l = 2;
+                k = 0;
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    if (l % 2 == 0) {
+                        k += Integer.parseInt(""+ds.getValue());
+                        Log.i("MainActivity", "now added:"+ds.getValue());
+                    }
+                    l++;
+                }
+                k = ( k / ((int) dataSnapshot.getChildrenCount() / 2));
+                Log.i("MainActivity", "k =  "+k);
+
+               if (k > 2000){
+                   Log.i("MainActivity", "child count: "+children);
+                   if (children > 503){
+                       Log.i("MainActivity", "CHAPTER 1 UNLOCKED");
+                       Button chapterOneButton = (Button) findViewById(R.id.ch1_button);
+                       chapterOneButton.setVisibility(View.VISIBLE);
+                       chapterOneButton.setOnClickListener(new View.OnClickListener() {
+                           @Override
+                           public void onClick(View view) {
+                               setCurrentRequestedChapter("chapter1");
+                           }
+                       });
+                   }
+                   if (children > 506){
+                       Log.i("MainActivity", "CHAPTER 2 UNLOCKED");
+                       Button chapterTwoButton = (Button) findViewById(R.id.ch2_button);
+                       chapterTwoButton.setVisibility(View.VISIBLE);
+                       chapterTwoButton.setOnClickListener(new View.OnClickListener() {
+                           @Override
+                           public void onClick(View view) {
+                               setCurrentRequestedChapter("chapter2");
+                           }
+                       });
+                   }
+                   if (children > 509){
+                       Log.i("MainActivity", "CHAPTER 3 UNLOCKED");
+                       Button chapterThreeButton = (Button) findViewById(R.id.ch3_button);
+                       chapterThreeButton.setVisibility(View.VISIBLE);
+                       chapterThreeButton.setOnClickListener(new View.OnClickListener() {
+                           @Override
+                           public void onClick(View view) {
+                               setCurrentRequestedChapter("chapter3");
+                           }
+                       });
+                   }
+               }
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Log.i("MainActivity", "edit in soilTimeline");
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.i("MainActivity", "removal in soilTimeline");
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                Log.i("MainActivity", "move made in soilTimeline");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.i("MainActivity", "soilTimeline monitoring cancelled");
+            }
+        });
+    }
 
     public void setCurrentRequestedChapter(String chapter){
         storyList = new ArrayList<>();
